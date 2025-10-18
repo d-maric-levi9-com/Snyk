@@ -50,9 +50,29 @@ jobs:
           command: code test
           args: --sarif-file-output=snyk.sarif
 
+      - name: Check if SARIF file exists
+        id: check_sarif
+        run: |
+          if [ -f snyk.sarif ]; then
+            echo "sarif_exists=true" >> $GITHUB_OUTPUT
+            echo "✅ SARIF file generated successfully"
+          else
+            echo "sarif_exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️  SARIF file not found - skipping upload"
+          fi
+
       - name: Upload results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
-        if: always()
+        if: steps.check_sarif.outputs.sarif_exists == 'true'
+        continue-on-error: true
         with:
           sarif_file: snyk.sarif
+
+      - name: Upload SARIF as artifact (alternative)
+        uses: actions/upload-artifact@v4
+        if: steps.check_sarif.outputs.sarif_exists == 'true'
+        with:
+          name: snyk-sarif-results
+          path: snyk.sarif
+          retention-days: 30
 

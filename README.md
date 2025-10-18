@@ -136,12 +136,33 @@ snyk monitor
 
 **NEVER use this code in production!**
 
+## 🔧 Troubleshooting
+
+Having issues? Check [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for solutions to common problems:
+
+- ❌ "Code scanning is not enabled" → See how to enable or use alternatives
+- ❌ "SARIF file not found" → Fixed! Workflows now check before uploading
+- ❌ "SNYK_TOKEN not found" → Steps to add your token correctly
+- ❌ No results showing → Multiple places to check your results
+
+### Quick Fix: Can't Enable Code Scanning?
+
+No problem! The workflows now automatically upload results as **artifacts**:
+
+1. Go to **Actions** tab
+2. Click on any workflow run
+3. Scroll to **Artifacts** section
+4. Download `snyk-sarif-results`
+
+You'll also always see results in the [Snyk Dashboard](https://app.snyk.io)!
+
 ## 📚 Additional Resources
 
 - [Snyk Documentation](https://docs.snyk.io)
 - [Snyk GitHub Actions](https://github.com/snyk/actions)
 - [Snyk CLI Documentation](https://docs.snyk.io/snyk-cli)
 - [DeepCode AI Fix Documentation](https://docs.snyk.io/scan-with-snyk/snyk-code/manage-code-vulnerabilities/fix-code-vulnerabilities-automatically)
+- [Troubleshooting Guide](TROUBLESHOOTING.md) ← **Start here if you have issues!**
 
 ## 🎯 What You'll Learn
 

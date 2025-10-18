@@ -28,8 +28,17 @@ jobs:
 
       - name: Upload Snyk Code results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('snyk-code.sarif') != ''
+        continue-on-error: true
         with:
           sarif_file: snyk-code.sarif
+      
+      - name: Upload SARIF as artifact
+        uses: actions/upload-artifact@v4
+        if: hashFiles('snyk-code.sarif') != ''
+        with:
+          name: snyk-code-sarif
+          path: snyk-code.sarif
 
   snyk-open-source:
     name: Snyk Open Source (Dependencies)
@@ -57,8 +66,17 @@ jobs:
 
       - name: Upload Snyk Open Source results
         uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('snyk-opensource.sarif') != ''
+        continue-on-error: true
         with:
           sarif_file: snyk-opensource.sarif
+      
+      - name: Upload SARIF as artifact
+        uses: actions/upload-artifact@v4
+        if: hashFiles('snyk-opensource.sarif') != ''
+        with:
+          name: snyk-opensource-sarif
+          path: snyk-opensource.sarif
 
   snyk-monitor:
     name: Snyk Monitor (Continuous Monitoring)
@@ -102,9 +120,17 @@ jobs:
 
       - name: Upload Snyk IaC results
         uses: github/codeql-action/upload-sarif@v3
-        if: always()
+        if: hashFiles('snyk-iac.sarif') != ''
+        continue-on-error: true
         with:
           sarif_file: snyk-iac.sarif
+      
+      - name: Upload SARIF as artifact
+        uses: actions/upload-artifact@v4
+        if: hashFiles('snyk-iac.sarif') != ''
+        with:
+          name: snyk-iac-sarif
+          path: snyk-iac.sarif
 
   snyk-container:
     name: Snyk Container
@@ -129,6 +155,15 @@ jobs:
 
       - name: Upload Snyk Container results
         uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('snyk-container.sarif') != ''
+        continue-on-error: true
         with:
           sarif_file: snyk-container.sarif
+      
+      - name: Upload SARIF as artifact
+        uses: actions/upload-artifact@v4
+        if: hashFiles('snyk-container.sarif') != ''
+        with:
+          name: snyk-container-sarif
+          path: snyk-container.sarif
 
